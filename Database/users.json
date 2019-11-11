@@ -1,0 +1,9 @@
+{"_id":{"$oid":"5d7cee5a2ee2e21904f0d423"},"first_name":"amit","last_name":"bhalerao","username":"amit","password":"123456","role":"ADMIN"}
+{"_id":{"$oid":"5d7ceec3a24ec419040a69ed"},"first_name":"amey","last_name":"bhalerao","username":"amey","password":"123456","role":"USER"}
+{"_id":{"$oid":"5d96243726d2c116bcfe7847"},"first_name":"kasturi","last_name":"bhalerao","username":"kasturi","password":"123456","role":"ADMIN","_class":"user"}
+{"_id":{"$oid":"5d9626a926d2c116bcfe7848"},"first_name":"Avani","last_name":"Bhalerao","username":"avani","password":"123456","role":"USER","_class":"user"}
+{"_id":{"$numberInt":"5"},"first_name":"avani","last_name":"bhalerao","username":"avani","password":"123456","role":"ADMIN"}
+{"_id":{"$oid":"5d9ca0e826d2c11768ab4781"},"first_name":"Abhijit","last_name":"Shinde","username":"abhijit","password":"123456","role":"USER","_class":"user"}
+{"_id":"1","first_name":"Alok","last_name":"Panchal","username":"alok","password":"1234556","role":"USER","_class":"user"}
+{"_id":"26","first_name":"Ajit","last_name":"Bhalerao","username":"ajit","password":"123456","role":"USER","_class":"user"}
+{"_id":"38","first_name":"Alok","last_name":"Panchal","username":"alok","password":"123456","role":"USER","_class":"user"}

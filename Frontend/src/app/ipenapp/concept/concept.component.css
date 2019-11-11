@@ -1,0 +1,41 @@
+
+
+::ng-deep ng2-smart-table a:link { color: white; }
+::ng-deep ng2-smart-table a:hover { color: gray; }
+::ng-deep ng2-smart-table a:focus { color: black; }
+
+::ng-deep ng2-smart-table {
+    font-size:16px;
+    color : black;
+}
+
+::ng-deep ng2-smart-table table thead tr:nth-child(even) {
+background: #eef5f9!important;
+color: white !important;
+}
+
+::ng-deep ng2-smart-table table thead {
+background: #745af2!important;
+}
+
+::ng-deep ng2-smart-table tbody tr:nth-child(even) {
+background: white!important;
+}
+
+::ng-deep ng2-smart-table table tbody tr:nth-child(odd) {
+background: #f2f3f3!important;
+}
+
+::ng-deep ng2-smart-table table > tbody > tr > td {
+    box-sizing: border-box;
+    border: 1px solid grey;
+}
+
+::ng-deep ng2-smart-table thead th{
+    text-align: left;
+  }
+
+::ng-deep a.ng2-smart-sort-link {
+    color :white !important;
+}
+

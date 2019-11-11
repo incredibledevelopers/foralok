@@ -1,0 +1,331 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><b>Companies</b></h4>
+                <div class="table table-responsive smart-table">
+                    <button class="btn btn-outline-primary mb-2 mr-2" (click)="addCompanyPopup(addcompanycontent)">+Add
+                        Company</button>
+                    <input #search class="search" type="text" placeholder="Global Search..."
+                        (keydown.enter)="onSearch(search.value)" class="form-control globalfilter">
+                    <ng2-smart-table [settings]="settings" [source]="companySource" class=""
+                        (edit)="onEditRowSelect($event)" (custom)="showEmployeesData($event)"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Company -->
+<ng-template #addcompanycontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title">Add Company</h2>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="companyForm">
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Company Name" aria-label="Company Name"
+                                aria-describedby="basic-addon11" formControlName="companyName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="5" class="form-control" placeholder="Description"
+                                formControlName="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Industry</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="industry" id="industry" class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="IT">IT</option>
+                                <option value="Mech">Mech</option>
+                                <option value="ENTC">ENTC</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="5" class="form-control" placeholder="Address"
+                                formControlName="address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Location" formControlName="location">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Opening Stock</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Opening Stock"
+                                formControlName="openingStock">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tax Year</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tax Year" formControlName="taxYear">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="saveComapny()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!--Edit Company -->
+<ng-template #editcompany let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title">Edit Company</h2>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="companyEditForm">
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Company Name" aria-label="Company Name"
+                                aria-describedby="basic-addon11" formControlName="companyName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="5" class="form-control" placeholder="Description"
+                                formControlName="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Industry</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="industry" id="industry" class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="IT">IT</option>
+                                <option value="Mech">Mech</option>
+                                <option value="ENTC">ENTC</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="5" class="form-control" placeholder="Address"
+                                formControlName="address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Location" formControlName="location">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Opening Stock</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Opening Stock"
+                                formControlName="openingStock">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tax Year</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tax Year" formControlName="taxYear">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="updateCompany()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" *ngIf="showEmployees && !noRecordsFound"><b>{{ cmpName }} Employees</b></h4>
+                <div class="table table-responsive smart-table">
+                    <button class="btn btn-outline-primary mb-2 mr-2" (click)="addEmployeePopup(addemployeecontent)"
+                        *ngIf="showEmployees || noRecordsFound">+Add
+                        Employee </button>
+                    <input #search class="search" type="text" placeholder="Global Search..."
+                        (keydown.enter)="onEmployeeSearch(search.value)" class="form-control globalfilter"
+                        *ngIf="showEmployees">
+                    <ng2-smart-table [settings]="empSettings" [source]="employeeSource" class=""
+                        (edit)="onEmployeeRowSelect($event)" *ngIf="showEmployees"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Employee -->
+<ng-template #addemployeecontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title">Add Employee</h2>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="employeeForm">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="User Name" formControlName="userName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Id</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Profile  Id"
+                                formControlName="profileId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Designation</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Designation"
+                                formControlName="designation">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Department"
+                                formControlName="department">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Salary</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Salary" formControlName="salary">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="10" class="form-control" placeholder="Remarks"
+                                formControlName="remarks"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stock Units</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Stock Units"
+                                formControlName="stockUnits">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="saveCompanyEmployee()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!--Edit Employee -->
+<ng-template #editemployee let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h2 class="modal-title">Edit Employee</h2>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="employeeEditForm">
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="User Name" formControlName="userName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Id</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Profile  Id"
+                                    formControlName="profileId">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Designation</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Designation"
+                                    formControlName="designation">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Department</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Department"
+                                    formControlName="department">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Salary</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Salary" formControlName="salary">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <div class="input-group mb-3">
+                                <textarea cols="0" rows="10" class="form-control" placeholder="Remarks"
+                                    formControlName="remarks"></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Stock Units</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Stock Units"
+                                    formControlName="stockUnits">
+                            </div>
+                        </div>
+    
+                        <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="updateCompanyEmployee()">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>

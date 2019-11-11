@@ -1,0 +1,104 @@
+/*
+Template Name: Admin Press Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+ 
+@import 'variable'; 
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/angular-calendar/css/angular-calendar.css"; 
+@import "../../../node_modules/chartist/dist/chartist.css";
+@import "../../../node_modules/quill/dist/quill.snow.css";
+@import 'app';
+@import 'pages';
+@import 'sidebar';
+@import '../scss/icons/font-awesome/css/font-awesome.min.css';
+@import '../scss/icons/simple-line-icons/css/simple-line-icons.css';
+@import '../scss/icons/themify-icons/themify-icons.css'; 
+@import "../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import 'widgets';
+@import 'grid';
+@import 'responsive';  
+@import 'spinners.scss'; 
+@import 'animate.css';       
+@import 'theme-settings.scss';   
+
+// color css
+
+@import 'colors/blue-dark';
+@import 'colors/default-dark';
+@import 'colors/red-dark';
+@import 'colors/green-dark';
+@import 'colors/purple-dark';
+@import 'colors/megna-dark';
+@import 'colors/megna';
+@import 'colors/blue';
+@import 'colors/red';
+@import 'colors/green';
+@import 'colors/purple';
+@import 'colors/default';
+
+// dark theme
+@import 'dark';
+
+
+
+a.ng2-smart-action.ng2-smart-action-edit-edit {
+    float: left;
+}
+
+.globalfilter {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width : 43% !important;
+    color : black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 34px;
+}
+
+.modal-title {
+    font-weight : bold;
+}
+
+.btn-outline-primary {
+    color: white;
+    background-color: #745af2;
+    border-color: #745af2;
+    transition: 0.2s ease-in;
+}
+
+.ng2-smart-title {
+    color: white;
+    text-decoration: none;
+}
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-weight: bold !important;
+}
+
+a.ng2-smart-sort-link.sort.asc::after, 
+a.ng2-smart-sort-link.sort.desc::after{
+    border-bottom: 4px solid rgb(255, 255, 255) !important;
+}
+
+.ng2-smart-filter select{
+    color: #67757c !important;
+    padding: 4px 2px
+}
+

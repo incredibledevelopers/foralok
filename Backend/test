@@ -1,0 +1,164 @@
+package com.ipen.portal.controller;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ipen.portal.model.Concept;
+import com.ipen.portal.model.ConceptLog;
+import com.ipen.portal.service.IConceptService;
+
+@Controller
+@RequestMapping("/concept/")
+public class ConceptController {
+
+	public static final Logger logger = LoggerFactory.getLogger(ConceptController.class);
+	
+	@Autowired
+	private IConceptService conceptService;
+	
+	@GetMapping("concept")
+    public String showConceptForm(Concept concept) {
+        return "concept-form";
+    }
+	
+	@GetMapping("concept/{id}")
+    public String showConceptById(@PathVariable("id") String id, Model model) {
+		logger.info("Fetching Concept by id");
+        model.addAttribute("concept", conceptService.getConceptById(id));
+        
+        return "concept-view";
+    }
+	
+	@GetMapping("concepts")
+    public String showConcepts(Model model, HttpServletRequest request) {
+		logger.info("Fetching Concepts");
+		
+		String username = (String) request.getSession().getAttribute("username");		
+        model.addAttribute("concepts", conceptService.getConceptsByUsername(username));
+        
+        return "concepts-list";
+    }
+
+	@GetMapping("list")
+    public String showAllConcepts(Model model) {
+		logger.info("Fetching All Concepts");
+        model.addAttribute("concepts", conceptService.getAllConcepts());
+        
+        return "concepts-list";
+    }
+	
+	@GetMapping("list/{option}/{param}")
+    public String showCompanyByStatus(@PathVariable("option") String option, @PathVariable("param") String param, Model model) {
+		logger.info("Fetching Concepts by " + option);
+		
+		if (option.equals("status")) {
+			model.addAttribute("concepts", conceptService.getConceptsByStatus(param));
+		} else if (option.equals("industry")) {
+			model.addAttribute("concepts", conceptService.getConceptsByIndustry(param));
+		} else if (option.equals("username")) {
+			model.addAttribute("concepts", conceptService.getConceptsByUsername(param));
+		}
+			
+        return "concepts-list";
+    }
+	
+	@PostMapping("add")
+    public String addConcept(@Valid Concept concept, BindingResult result, Model model, HttpServletRequest request) {
+		logger.info("Add Concept : {}", concept);
+		
+        if (result.hasErrors()) {
+            return "concept-form";
+        }
+        
+        boolean exists = conceptService.conceptExists(concept.getConceptTitle(), concept.getConceptDescription());
+		if (exists == true) {
+			logger.error("Unable to add. A Concept with concept title and description {} already exist", concept.getConceptTitle());
+			return "exists";
+		}
+		
+		concept.setUsername((String) request.getSession().getAttribute("username"));
+        conceptService.addConcept(concept);
+      
+        return "redirect:concepts";
+    }
+	
+	@PostMapping("update/{id}")
+    public String addConcept(@PathVariable("id") String id, @Valid Concept concept, BindingResult result, Model model) {
+		logger.info("Add Concept : {}", concept);
+		
+        if (result.hasErrors()) {
+            return "concept-form";
+        }
+        
+        Concept currentConcept = conceptService.getConceptById(id);
+		if (currentConcept == null) {
+			logger.error("Unable to add. A Concept with concept name {} not found", concept.getConceptTitle());
+			return "error";
+		}
+		
+        conceptService.updateConcept(concept);
+      
+        return "redirect:concepts";
+    }
+	
+	//Log Related
+	//@PostMapping("add/{id}/log") @PathVariable("id") String id, 
+	@PostMapping("add/log")
+    public String addConceptLog(@Valid ConceptLog conceptLog, Model model, HttpServletRequest request) {
+		logger.info("Add ConceptLog : {}", conceptLog);
+		
+		String id = (String) request.getSession().getAttribute("concept.id");
+		
+		conceptLog.setEnteredBy((String)request.getSession().getAttribute("username"));
+        Concept concept = conceptService.getConceptById(id); 
+		Set<ConceptLog> conceptLogSet = concept.getConceptLogs();
+	
+		if (conceptLogSet == null)
+			conceptLogSet = new HashSet<ConceptLog>();
+		
+		conceptLogSet.add(conceptLog);
+		concept.setConceptLogs(conceptLogSet);
+        conceptService.updateConcept(concept);
+        
+        System.out.println("tesint");
+        model.addAttribute("conceptlogs", concept.getConceptLogs());
+        
+        return "conceptlog-view";
+        
+        //return "redirect:/concept/concept/{" + id + "}/log";
+    }
+		
+	@GetMapping("conceptlog/{id}")
+    public String showConceptLogForm(ConceptLog conceptLog, @PathVariable("id") String id, Model model, HttpServletRequest request) {
+		System.out.println(" id =============================" + id);
+		//model.addAttribute("id", id);
+		if (id != null)
+		request.getSession().setAttribute("concept.id", id);
+        return "conceptlog-form";
+    }
+	
+		
+	@GetMapping("concept/{id}/log")
+    public String showConceptByLog(@PathVariable("id") String id, Model model) {
+		logger.info("Fetching ConceptLog by id");
+		Concept concept = conceptService.getConceptById(id);
+        model.addAttribute("concepts", concept.getConceptLogs());
+        
+        return "conceptlog-list";
+    }
+	
+}

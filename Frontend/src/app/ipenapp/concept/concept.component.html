@@ -1,0 +1,152 @@
+<div class="row" *ngIf="showAdminTable">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><b>Concepts</b></h4>
+                <div class="table table-responsive smart-table">
+                    <button class="btn btn-outline-primary mb-2 mr-2" (click)="addConceptPopup(addconceptcontent)">+Add
+                        Concept</button>
+                    <input #search class="search" type="text" placeholder="Global Search..."
+                        (keydown.enter)="onSearch('ADMIN',search.value)" class="form-control globalfilter">
+                    <ng2-smart-table [settings]="settings" [source]="adminSource" class=""
+                        (edit)="onEditRowSelect($event)" (custom)="showConceptLogs($event)"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="showUserTable">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><b>Concepts</b></h4>
+                <div class="table table-responsive smart-table">
+                    <button class="btn btn-outline-primary mb-2 mr-2" (click)="addConceptPopup(addconceptcontent)">+Add
+                        Concept</button>
+                    <input #search class="search" type="text" placeholder="Global Search..."
+                        (keydown.enter)="onSearch('USER',search.value)" class="form-control globalfilter">
+                        <ng2-smart-table [settings]="settings" [source]="userSource" class=""
+                        (edit)="onEditRowSelect($event)" (custom)="showConceptLogs($event)"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Concept -->
+<ng-template #addconceptcontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title">Add Concept</h2>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="conceptForm">
+                    <div class="form-group">
+                        <label>Concept Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Concept Name" aria-label="Concept Name"
+                                aria-describedby="basic-addon11" formControlName="conceptTitle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Industry</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="industry" id="industry" class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="IT">IT</option>
+                                <option value="Mech">Mech</option>
+                                <option value="ENTC">ENTC</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="5" class="form-control" placeholder="Description"
+                                formControlName="conceptDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Launch Type</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="conceptLeadOrDrop" id="conceptLeadOrDrop"
+                                class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="LEAD">LEAD</option>
+                                <option value="DROP">DROP</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="saveConcept()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!--Edit Concept -->
+<ng-template #editconceptcontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title">Edit Concept</h2>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="conceptEditForm">
+                    <div class="form-group">
+                        <label>Concept Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Concept Name" aria-label="Concept Name"
+                                aria-describedby="basic-addon11" formControlName="conceptTitle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Industry</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="industry" id="industry" class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="IT">IT</option>
+                                <option value="Mech">Mech</option>
+                                <option value="ENTC">ENTC</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div class="input-group mb-3">
+                            <textarea cols="0" rows="10" class="form-control" placeholder="Description"
+                                formControlName="conceptDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Launch Type</label>
+                        <div class="input-group mb-3">
+                            <select formControlName="conceptLeadOrDrop" id="conceptLeadOrDrop"
+                                class="form-control custom-select">
+                                <option value="">Select</option>
+                                <option value="LEAD">LEAD</option>
+                                <option value="DROP">DROP</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary mb-2 mr-2" (click)="updateConcept()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<div *ngIf="showLogs">
+<conceptlogs [data]="conceptData" (change)="showLogsChange($event)"></conceptlogs>
+</div>
